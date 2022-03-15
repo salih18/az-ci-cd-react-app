@@ -18,7 +18,7 @@ variables:
   # azureRmConnection: "d896384a-d76c-42e5-abac-bc998e3835ec"
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "d896384a-d76c-42e5-abac-bc998e3835ec"
+  azureSubscription: "72c9fb64-185f-4381-a4bb-e6192ddbbeab"
 
   # Web app name
   webAppName: "az-react-sample"
