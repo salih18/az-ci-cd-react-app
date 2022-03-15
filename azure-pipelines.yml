@@ -13,10 +13,14 @@ trigger:
 
 variables:
   rootDir: "client"
-  buildDir:
-    "$(rootDir)/build"
-    # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "{{ service-connection-react.Id }}"
+  buildDir: "$(rootDir)/build"
+
+  azureRmConnection:
+    - name: "Id"
+      value: "service-connection-react"
+
+      # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: "$(azureRmConnection.Id)"
 
   # Web app name
   webAppName: "az-react-sample"
@@ -24,8 +28,10 @@ variables:
   # Environment name
   environmentName: "dev"
 
+  vmImageName: "ubuntu-latest"
+
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: "$(vmImageName)"
 
 stages:
   - stage: Build
@@ -73,7 +79,7 @@ stages:
             deploy:
               steps:
                 - task: AzureRmWebAppDeployment@4
-                  displayName: "Azure App Service Deploy: {{ webAppName }}"
+                  displayName: "Azure App Service Deploy: $(webAppName)"
                   inputs:
                     azureSubscription: $(azureSubscription)
                     appType: webAppLinux
