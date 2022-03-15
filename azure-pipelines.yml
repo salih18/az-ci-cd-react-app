@@ -22,10 +22,10 @@ steps:
     displayName: "npm install and build"
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: "$(Build.BinariesDirectory)/client"
+      rootFolderOrFile: "$(Build.BinariesDirectory)"
       includeRootFolder: true
       archiveType: "zip"
-      archiveFile: "$(Build.ArtifactStagingDirectory)/client/$(Build.BuildId).zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
       replaceExistingArchive: true
 
   - task: PublishBuildArtifacts@1
