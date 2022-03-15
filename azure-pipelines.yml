@@ -5,14 +5,14 @@ trigger:
       - development
   paths:
     include:
-      - client/*
+      - frontend/*
 
     exclude:
       - README.md
       - azure-pipelines.yml
 
 variables:
-  rootDir: "client"
+  rootDir: "frontend"
   buildDir: "$(rootDir)/build"
 
   # azureRmConnection: "d896384a-d76c-42e5-abac-bc998e3835ec"
