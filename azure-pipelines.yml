@@ -18,7 +18,7 @@ variables:
   azureRmConnection: "service-connection-react"
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "$(azureRmConnection.Id)"
+  azureSubscription: "$(azureRmConnection).Id"
 
   # Web app name
   webAppName: "az-react-sample"
