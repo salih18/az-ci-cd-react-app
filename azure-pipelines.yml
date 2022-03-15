@@ -15,10 +15,10 @@ variables:
   rootDir: "client"
   buildDir: "$(rootDir)/build"
 
-  azureRmConnection: "service-connection-react"
+  # azureRmConnection: "d896384a-d76c-42e5-abac-bc998e3835ec"
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "$(azureRmConnection).Id"
+  azureSubscription: "d896384a-d76c-42e5-abac-bc998e3835ec"
 
   # Web app name
   webAppName: "az-react-sample"
