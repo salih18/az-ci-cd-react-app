@@ -17,9 +17,10 @@ variables:
 
   azureRmConnection:
     - name: "Id"
-      value: "service-connection-react"
+      value:
+        "service-connection-react"
 
-      # Azure Resource Manager connection created during pipeline creation
+        # Azure Resource Manager connection created during pipeline creation
   azureSubscription: "$(azureRmConnection.Id)"
 
   # Web app name
