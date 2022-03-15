@@ -38,7 +38,7 @@ stages:
         steps:
           - task: NodeTool@0
             inputs:
-              versionSpec: "10.x"
+              versionSpec: "12.x"
             displayName: "Install Node.js"
 
           - script: |
@@ -83,7 +83,7 @@ stages:
                     appType: webAppLinux
                     WebAppName: $(webAppName)
                     packageForLinux: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
-                    RuntimeStack: "NODE|10.10"
+                    RuntimeStack: "NODE|12.0"
                     StartupCommand: "pm2 serve /home/site/wwwroot --no-daemon --spa"
                     # ScriptType: "Inline Script"
                     # InlineScript: |
