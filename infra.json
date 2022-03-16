@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "functions": [],
+  "variables": {
+    "prefix": "az-ci-cd-weu-",
+    "app_name": "[concat(variables('prefix'),'001-app')]",
+    "plan_name": "[concat(variables('prefix'),'001-plan')]"
+  },
+  "resources": [
+    {
+      "name": "[variables('plan_name')]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "S1",
+        "capacity": 1
+      },
+      "properties": {
+        "name": "[variables('plan_name')]"
+      },
+      "kind": "linux"
+    },
+    {
+      "name": "[variables('app_name')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('plan_name'))]"
+      ],
+      "properties": {
+        "name": "[variables('app_name')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('plan_name'))]"
+      }
+    }
+  ],
+  "outputs": {}
+}
