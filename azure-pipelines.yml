@@ -12,7 +12,9 @@ trigger:
       - azure-pipelines.yml
 
 variables:
-  - group: react-app-dev
+  - name: environment
+    value: dev
+  - group: react-app-${{variables.environment}}
 
   - name: "rootDir"
     value: "frontend"
@@ -23,11 +25,6 @@ variables:
   - name: "vmImageName"
     value: "ubuntu-latest"
 
-  - name: "environmentName"
-    value: "dev"
-
-  - name: serviceConnection
-    value: "azureSubscription-$(environmentName)"
     # rootDir: "frontend"
     # buildDir: "$(rootDir)/build"
 
@@ -98,8 +95,8 @@ stages:
             inputs:
               azureResourceManagerConnection: "$(serviceConnection)"
               subscriptionId: "2443494e-9961-400c-8bbc-e47a009022ab"
-              resourceGroupName: "az-ci-cd-$(environmentName)"
-              location: "West Europe"
+              resourceGroupName: "$(resourceGroup)"
+              location: "$(resourceLocation)"
               csmFile: "$(System.DefaultWorkingDirectory)/_salih18.az-ci-cd-react-app/drop/infra.json"
 
   - stage: Deploy
@@ -109,7 +106,7 @@ stages:
     jobs:
       - deployment: Deploy
         displayName: Deploy
-        environment: $(environmentName)
+        environment: $(environment)
         pool:
           vmImage: $(vmImageName)
         strategy:
@@ -121,7 +118,7 @@ stages:
                   inputs:
                     azureSubscription: "$(serviceConnection)"
                     appType: webAppLinux
-                    WebAppName: "$(webAppName)-$(environmentName)"
+                    WebAppName: "$(webAppName)"
                     packageForLinux: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
                     RuntimeStack: "NODE|12.0"
                     StartupCommand: "pm2 serve /home/site/wwwroot --no-daemon --spa"
