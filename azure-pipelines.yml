@@ -73,6 +73,31 @@ stages:
               ArtifactName: "drop"
               publishLocation: "Container"
 
+      - job: CopyFile
+        steps:
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: "$(System.DefaultWorkingDirectory)"
+              Contents: |
+                **/*.yaml
+                **/*.yml
+                **/*.tf
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+  - stage: infra
+    displayName: Create Resources
+    jobs:
+      - job: BuildJob
+        steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: "ARM Template deployment: Resource Group scope"
+            inputs:
+              azureResourceManagerConnection: "service-connection-react"
+              subscriptionId: "2443494e-9961-400c-8bbc-e47a009022ab"
+              resourceGroupName: "az-ci-cd-dev"
+              location: "West Europe"
+              csmFile: "$(System.DefaultWorkingDirectory)/_salih18.az-ci-cd-react-app/drop/66.zip"
+
   - stage: Deploy
     displayName: Deploy stage
     dependsOn: Build
