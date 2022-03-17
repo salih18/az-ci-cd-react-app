@@ -25,22 +25,6 @@ variables:
   - name: "vmImageName"
     value: "ubuntu-latest"
 
-    # rootDir: "frontend"
-    # buildDir: "$(rootDir)/build"
-
-    # azureRmConnection: "d896384a-d76c-42e5-abac-bc998e3835ec"
-
-    # Azure Resource Manager connection created during pipeline creation
-    # azureSubscription: "service-connection-react"
-
-    # # Web app name
-    # webAppName: "az-react-sample"
-
-    # # Environment name
-    # environmentName: "dev"
-
-    # vmImageName: "ubuntu-latest"
-
 pool:
   vmImage: "$(vmImageName)"
 
@@ -99,7 +83,7 @@ stages:
               subscriptionId: "2443494e-9961-400c-8bbc-e47a009022ab"
               resourceGroupName: "$(resourceGroup)"
               location: "$(resourceLocation)"
-              csmFile: "$(System.DefaultWorkingDirectory)/_salih18.az-ci-cd-react-app/drop/infra.json"
+              csmFile: "$(System.DefaultWorkingDirectory)/infra.json"
 
   - stage: Deploy
     displayName: Deploy stage
