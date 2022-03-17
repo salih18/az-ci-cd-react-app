@@ -85,8 +85,10 @@ stages:
                 **/*.json
               TargetFolder: "$(Build.ArtifactStagingDirectory)"
 
-  - stage: infra
+  - stage: Infra
     displayName: Create Resources
+    dependsOn: Build
+
     jobs:
       - job: BuildJob
         steps:
@@ -101,7 +103,7 @@ stages:
 
   - stage: Deploy
     displayName: Deploy stage
-    dependsOn: Build
+    dependsOn: Infra
     condition: succeeded()
     jobs:
       - deployment: Deploy
