@@ -12,7 +12,7 @@ trigger:
       - azure-pipelines.yml
 
 variables:
-  - group: react-app-$(environment)
+  - group: react-app-dev
 
   - name: "rootDir"
     value: "frontend"
