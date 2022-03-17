@@ -94,7 +94,7 @@ stages:
           - task: AzureResourceManagerTemplateDeployment@3
             displayName: "ARM Template deployment: Resource Group scope"
             inputs:
-              azureResourceManagerConnection: "$('azureSubscription-$(environmentName)')"
+              azureResourceManagerConnection: $(azureSubscription-$(environmentName))
               subscriptionId: "2443494e-9961-400c-8bbc-e47a009022ab"
               resourceGroupName: "az-ci-cd-$(environmentName)"
               location: "West Europe"
@@ -117,7 +117,7 @@ stages:
                 - task: AzureRmWebAppDeployment@4
                   displayName: "Azure App Service Deploy: $(webAppName)"
                   inputs:
-                    azureSubscription: "$('azureSubscription-$(environmentName)')"
+                    azureSubscription: $(azureSubscription-$(environmentName))
                     appType: webAppLinux
                     WebAppName: "$(webAppName)-$(environmentName)"
                     packageForLinux: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
