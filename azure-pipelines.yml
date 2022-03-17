@@ -82,7 +82,7 @@ stages:
             inputs:
               SourceFolder: "$(System.DefaultWorkingDirectory)"
               Contents: |
-                **/*.json
+                **/infra.json
               TargetFolder: "$(Build.ArtifactStagingDirectory)"
 
   - stage: Infra
