@@ -23,6 +23,9 @@ variables:
   - name: "vmImageName"
     value: "ubuntu-latest"
 
+  - name: "environmentName"
+    value: "dev"
+
     # rootDir: "frontend"
     # buildDir: "$(rootDir)/build"
 
@@ -76,12 +79,11 @@ stages:
       - job: CopyFile
         steps:
           - task: CopyFiles@2
+            displayName: "Copy infra ARM template"
             inputs:
               SourceFolder: "$(System.DefaultWorkingDirectory)"
               Contents: |
-                **/*.yaml
-                **/*.yml
-                **/*.tf
+                **/*.json
               TargetFolder: "$(Build.ArtifactStagingDirectory)"
 
   - stage: infra
@@ -92,11 +94,11 @@ stages:
           - task: AzureResourceManagerTemplateDeployment@3
             displayName: "ARM Template deployment: Resource Group scope"
             inputs:
-              azureResourceManagerConnection: "service-connection-react"
+              azureResourceManagerConnection: "azureSubscription-$(environmentName)"
               subscriptionId: "2443494e-9961-400c-8bbc-e47a009022ab"
-              resourceGroupName: "az-ci-cd-dev"
+              resourceGroupName: "az-ci-cd-$(environmentName)"
               location: "West Europe"
-              csmFile: "$(System.DefaultWorkingDirectory)/_salih18.az-ci-cd-react-app/drop/66.zip"
+              csmFile: "$(System.DefaultWorkingDirectory)/_salih18.az-ci-cd-react-app/drop/infra.json"
 
   - stage: Deploy
     displayName: Deploy stage
@@ -115,7 +117,7 @@ stages:
                 - task: AzureRmWebAppDeployment@4
                   displayName: "Azure App Service Deploy: $(webAppName)"
                   inputs:
-                    azureSubscription: "$(azureSubscription)-$(environmentName)"
+                    azureSubscription: "azureSubscription-$(environmentName)"
                     appType: webAppLinux
                     WebAppName: "$(webAppName)-$(environmentName)"
                     packageForLinux: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
