@@ -12,21 +12,32 @@ trigger:
       - azure-pipelines.yml
 
 variables:
-  rootDir: "frontend"
-  buildDir: "$(rootDir)/build"
+  - group: react-app-$(environment)
 
-  # azureRmConnection: "d896384a-d76c-42e5-abac-bc998e3835ec"
+  - name: "rootDir"
+    value: "frontend"
 
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "service-connection-react"
+  - name: "buildDir"
+    value: "$(rootDir)/build"
 
-  # Web app name
-  webAppName: "az-react-sample"
+  - name: "vmImageName"
+    value: "ubuntu-latest"
 
-  # Environment name
-  environmentName: "dev"
+    # rootDir: "frontend"
+    # buildDir: "$(rootDir)/build"
 
-  vmImageName: "ubuntu-latest"
+    # azureRmConnection: "d896384a-d76c-42e5-abac-bc998e3835ec"
+
+    # Azure Resource Manager connection created during pipeline creation
+    # azureSubscription: "service-connection-react"
+
+    # # Web app name
+    # webAppName: "az-react-sample"
+
+    # # Environment name
+    # environmentName: "dev"
+
+    # vmImageName: "ubuntu-latest"
 
 pool:
   vmImage: "$(vmImageName)"
@@ -79,9 +90,9 @@ stages:
                 - task: AzureRmWebAppDeployment@4
                   displayName: "Azure App Service Deploy: $(webAppName)"
                   inputs:
-                    azureSubscription: $(azureSubscription)
+                    azureSubscription: "$(azureSubscription)-$(environmentName)"
                     appType: webAppLinux
-                    WebAppName: $(webAppName)
+                    WebAppName: "$(webAppName)-$(environmentName)"
                     packageForLinux: "$(Pipeline.Workspace)/drop/$(Build.BuildId).zip"
                     RuntimeStack: "NODE|12.0"
                     StartupCommand: "pm2 serve /home/site/wwwroot --no-daemon --spa"
