@@ -23,6 +23,9 @@ variables:
   - name: "vmImageName"
     value: "ubuntu-latest"
 
+  - name: "environmentName"
+    value: "dev"
+
     # rootDir: "frontend"
     # buildDir: "$(rootDir)/build"
 
